@@ -47,6 +47,11 @@ namespace SchoolSystemApi.Models
 
     #endregion
 
+    #region Admin
+
+    
+    #endregion
+
     #region Portal
 
     public class GetUser

@@ -18,5 +18,7 @@ namespace SchoolSystemApi
         public string SchoolName { get; set; }
         public string Address { get; set; }
         public string Logo { get; set; }
+        public string SchoolType { get; set; }
+        public bool Active { get; set; }
     }
 }
