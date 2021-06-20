@@ -49,7 +49,31 @@ namespace SchoolSystemApi.Models
 
     #region Admin
 
-    
+    public class School
+    {
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string School_ID { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string SchoolName { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string SchoolType { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Address { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Logo { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Active { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Status { get; set; }
+    }
+
     #endregion
 
     #region Portal
@@ -96,5 +120,12 @@ namespace SchoolSystemApi.Models
         public bool HOD { get; set; }
     }
 
-    #endregion
+
+    public class Teachers
+    {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Status { get; set; }
+
+    }
 }
+        #endregion

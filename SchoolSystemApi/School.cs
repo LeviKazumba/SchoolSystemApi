@@ -20,5 +20,6 @@ namespace SchoolSystemApi
         public string Logo { get; set; }
         public string SchoolType { get; set; }
         public bool Active { get; set; }
+        public string Status { get; internal set; }
     }
 }

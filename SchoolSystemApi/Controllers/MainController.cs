@@ -207,7 +207,7 @@ namespace SchoolSystemApi.Controllers
 
                         Content = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"MailTemplates\PasswordUpdate.html");
                         Content = Content.Replace("{Name}", user.Name);
-                        Content = Content.Replace("{Link}", "/RecoverAccount?="+user.UserID);
+                        Content = Content.Replace("{Link}", "/RecoverAccount?=" + user.UserID);
 
                         bool CC = false;
 
@@ -259,7 +259,7 @@ namespace SchoolSystemApi.Controllers
                 {
                     User.Password = u.NewPassword;
                     User.LastPassword = u.NewPassword;
-                   
+
 
                     gm.Status = "Success";
                     gm.Data = "Your account password has been updated";
@@ -278,7 +278,7 @@ namespace SchoolSystemApi.Controllers
             return gm;
         }
 
-       
+
         #endregion
 
         #region Admin
@@ -318,7 +318,7 @@ namespace SchoolSystemApi.Controllers
 
                 HttpPostedFile Logo = httpRequest.Files[0];
 
-                if(Logo.ContentLength == 0)
+                if (Logo.ContentLength == 0)
                 {
                     throw new Exception("School logo required");
                 }
@@ -423,7 +423,7 @@ namespace SchoolSystemApi.Controllers
 
                 //    gm.Status = "Success";
                 //    gm.Data = "We have sent your login credentials to this email address: " + User.Email;
-            
+
             }
             catch (Exception ex)
             {
@@ -442,9 +442,15 @@ namespace SchoolSystemApi.Controllers
 
             try
             {
+
+                if (string.IsNullOrEmpty(School_ID))
+                {
+                    throw new Exception("School ID required");
+                }
+
                 var s = (from a in db.Schools where a.School_ID == School_ID select a).FirstOrDefault();
 
-                if(s != null)
+                if (s != null)
                 {
                     s.Active = false;
                     db.SaveChanges();
@@ -474,11 +480,17 @@ namespace SchoolSystemApi.Controllers
 
             try
             {
+
+                if (string.IsNullOrEmpty(School_ID))
+                {
+                    throw new Exception("School ID required");
+                }
+
                 var s = (from a in db.Schools where a.School_ID == School_ID select a).FirstOrDefault();
 
                 if (s != null)
                 {
-                    s.Active = false;
+                    s.Active = true;
                     db.SaveChanges();
 
                     gm.Status = "Success";
@@ -506,6 +518,12 @@ namespace SchoolSystemApi.Controllers
 
             try
             {
+
+                if (string.IsNullOrEmpty(UserID))
+                {
+                    throw new Exception("User ID required");
+                }
+
                 var s = (from a in db.Users where a.UserID == UserID select a).FirstOrDefault();
 
                 if (s != null)
@@ -538,6 +556,12 @@ namespace SchoolSystemApi.Controllers
 
             try
             {
+
+                if (string.IsNullOrEmpty(UserID))
+                {
+                    throw new Exception("User ID required");
+                }
+
                 var s = (from a in db.Users where a.UserID == UserID select a).FirstOrDefault();
 
                 if (s != null)
@@ -581,6 +605,10 @@ namespace SchoolSystemApi.Controllers
                 {
                     user.LockedOut = false;
                     db.SaveChanges();
+
+                    gm.Status = "Success";
+                    gm.Data = user.Username + " is now unlocked";
+
                 }
                 else
                 {
@@ -616,11 +644,51 @@ namespace SchoolSystemApi.Controllers
                 {
                     user.LockedOut = true;
                     db.SaveChanges();
+
+                    gm.Status = "Success";
+                    gm.Data = user.Username + " is now locked";
                 }
                 else
                 {
                     throw new Exception("Invalid user ID");
                 }
+
+            }
+            catch (Exception ex)
+            {
+                gm.Status = "Failed";
+                gm.Data = ex.Message;
+            }
+
+            return gm;
+        }
+
+
+        [HttpGet]
+        [Route("Admin/Schools")]
+        public object Getchools()
+        {
+            GenericModel gm = new GenericModel();
+            try
+            {
+                var s = (from a in db.Schools
+                         select new School
+                         {
+                             Status = "Success",
+                             School_ID = a.School_ID,
+                             SchoolName = a.SchoolName,
+                             SchoolType = a.SchoolType,
+                             Logo = a.Logo,
+                             Address = a.Address,
+                             Active = a.Active,
+
+                         }).ToList();
+
+                if (s != null)
+                {
+                    return s;
+                }
+
 
             }
             catch (Exception ex)
@@ -690,6 +758,52 @@ namespace SchoolSystemApi.Controllers
             return gu;
         }
 
+
+        [HttpGet]
+        [Route("Portal/Teachers/{School_ID}")]
+        public object GetSchoolTeachers(string School_ID)
+        {
+            //Get teachers for a particular school for the user portal UI
+
+            GenericModel gm = new GenericModel();
+            try
+            {
+                var s = (from b in db.Teachers
+                         join c in db.Users on b.UserID equals c.UserID
+                         join d in db.Schools on b.School_ID equals d.School_ID
+                         join e in db.Departments on b.Department_ID equals e.ID
+                         where d.School_ID == School_ID
+                         select new GetUser
+                         {
+                             Status = "Success",
+                             UserID = b.UserID,
+                             School_ID = b.School_ID,
+                             SchoolName = d.SchoolName,
+                             Name = c.Name,
+                             Surname = c.Surname,
+                             Username = c.Username,
+                             Email = c.Email,
+                             UserType = c.UserType,
+                             Department_ID = e.ID,
+                             DepartmentName = e.DepartmentName,
+                             HOD = b.IsHOD
+                         }).ToList();
+
+                if (s != null)
+                {
+                    return s;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                gm.Status = "Failed";
+                gm.Data = ex.Message;
+            }
+
+            return gm;
+        }
         #endregion
 
         #region Methods
@@ -739,7 +853,7 @@ namespace SchoolSystemApi.Controllers
             }
 
         }
-       
+
         public void SendEmail(string EmailTo, string Content, string Subject, bool CC)
         {
 
@@ -798,10 +912,10 @@ namespace SchoolSystemApi.Controllers
                 };
                 var Result = cloudinary.Upload(uploadselfie);
 
-                 Path = Result.SecureUrl.AbsoluteUri;
+                Path = Result.SecureUrl.AbsoluteUri;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -813,10 +927,10 @@ namespace SchoolSystemApi.Controllers
             string Status = "";
             try
             {
-                if(Type == "Email")
+                if (Type == "Email")
                 {
                     var email = (from a in db.Users where a.Email == Text select a.Email).FirstOrDefault();
-                    if(email != null)
+                    if (email != null)
                     {
                         Status = "Duplicate";
                     }
@@ -839,7 +953,7 @@ namespace SchoolSystemApi.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Status = "Failed";
             }
