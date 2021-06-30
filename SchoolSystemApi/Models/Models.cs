@@ -10,7 +10,7 @@ namespace SchoolSystemApi.Models
     #region Accounts
     public class UserLogin
     {
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
 
     }
@@ -19,7 +19,7 @@ namespace SchoolSystemApi.Models
     {
         public string Status { get; set; }
 
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string UserID { get; set; }
 
     }
@@ -49,7 +49,7 @@ namespace SchoolSystemApi.Models
 
     #region Admin
 
-    public class School
+    public class NewSchool
     {
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -68,7 +68,7 @@ namespace SchoolSystemApi.Models
         public string Logo { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Active { get; set; }
+        public bool Active { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Status { get; set; }
@@ -96,6 +96,9 @@ namespace SchoolSystemApi.Models
         public string SchoolName { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Logo { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -111,13 +114,13 @@ namespace SchoolSystemApi.Models
         public string UserType { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int Department_ID { get; set; }
+        public int? Department_ID { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string DepartmentName { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public bool HOD { get; set; }
+        public bool? HOD { get; set; }
     }
 
 

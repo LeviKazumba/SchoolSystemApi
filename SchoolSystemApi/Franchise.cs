@@ -12,10 +12,14 @@ namespace SchoolSystemApi
     using System;
     using System.Collections.Generic;
     
-    public partial class SGB
+    public partial class Franchise
     {
-        public string UserID { get; set; }
-        public string School_ID { get; set; }
-        public bool IsPrincipal { get; set; }
+        public string FranchiseID { get; set; }
+        public string FranchiseName { get; set; }
+        public string Address { get; set; }
+        public int NumberOfFranchisee { get; set; }
+        public string CompnayRegistrationNumber { get; set; }
+        public bool Active { get; set; }
+        public string Logo { get; set; }
     }
 }

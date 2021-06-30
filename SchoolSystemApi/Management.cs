@@ -12,10 +12,9 @@ namespace SchoolSystemApi
     using System;
     using System.Collections.Generic;
     
-    public partial class Subject
+    public partial class Management
     {
-        public int ID { get; set; }
-        public string SubjectName { get; set; }
-        public int Department_ID { get; set; }
+        public string UserID { get; set; }
+        public string School_ID { get; set; }
     }
 }

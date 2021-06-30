@@ -13,10 +13,10 @@ namespace SchoolSystemApi
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SchoolSystemEntities : DbContext
+    public partial class PreSchoolsEntities : DbContext
     {
-        public SchoolSystemEntities()
-            : base("name=SchoolSystemEntities")
+        public PreSchoolsEntities()
+            : base("name=PreSchoolsEntities")
         {
         }
     
@@ -25,8 +25,9 @@ namespace SchoolSystemApi
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Franchise> Franchises { get; set; }
-        public virtual DbSet<School> Schools { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Management> Managements { get; set; }
+        public virtual DbSet<Parent> Parents { get; set; }
+        public virtual DbSet<Teacher> Teachers { get; set; }
     }
 }

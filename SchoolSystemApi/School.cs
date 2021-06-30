@@ -16,10 +16,12 @@ namespace SchoolSystemApi
     {
         public string School_ID { get; set; }
         public string SchoolName { get; set; }
+        public string SchoolType { get; set; }
         public string Address { get; set; }
         public string Logo { get; set; }
-        public string SchoolType { get; set; }
         public bool Active { get; set; }
-        public string Status { get; internal set; }
+        public string CompanyRegistrationNumber { get; set; }
+        public bool IsFranchisee { get; set; }
+        public string FranchiseID { get; set; }
     }
 }

@@ -24,6 +24,8 @@ namespace SchoolSystemApi.Controllers
 
 
         SchoolSystemEntities db = new SchoolSystemEntities();
+        PreSchoolsEntities dbP = new PreSchoolsEntities();
+
 
 
         static readonly Account account = new Account(
@@ -44,9 +46,9 @@ namespace SchoolSystemApi.Controllers
             try
             {
                 //Validate input
-                if (string.IsNullOrEmpty(l.Username))
+                if (string.IsNullOrEmpty(l.Email))
                 {
-                    throw new Exception("Username required");
+                    throw new Exception("Email required");
                 }
 
                 if (string.IsNullOrEmpty(l.Password))
@@ -54,7 +56,7 @@ namespace SchoolSystemApi.Controllers
                     throw new Exception("Password required");
                 }
 
-                var User = (from a in db.Users where a.Username == l.Username select a).FirstOrDefault();
+                var User = (from a in db.Users where a.Email == l.Email select a).FirstOrDefault();
 
                 if (User != null)
                 {
@@ -69,7 +71,7 @@ namespace SchoolSystemApi.Controllers
 
                         r.Status = "Success";
                         r.UserID = User.UserID;
-                        r.Username = User.Username;
+                        r.Email = User.Email;
 
                         User.LastLogin = DateTime.Now;
                         User.LoginAttempts = 0;
@@ -134,7 +136,7 @@ namespace SchoolSystemApi.Controllers
 
                     Content = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"MailTemplates\ForgotPassword.html");
                     Content = Content.Replace("{Name}", User.Name);
-                    Content = Content.Replace("{Username}", User.Username);
+                    Content = Content.Replace("{Username}", User.Email);
                     Content = Content.Replace("{Password}", User.Password);
 
                     bool CC = false;
@@ -143,11 +145,11 @@ namespace SchoolSystemApi.Controllers
 
 
                     gm.Status = "Success";
-                    gm.Data = "We have sent your login credentials to this email address: " + User.Email;
+                    gm.Data = "We have sent your account credentials to this email address: " + User.Email;
                 }
                 else
                 {
-                    throw new Exception("We do not recognize this email, please enter a valid email.");
+                    throw new Exception("We do not recognize this email, please enter your account email.");
                 }
             }
             catch (Exception ex)
@@ -291,7 +293,8 @@ namespace SchoolSystemApi.Controllers
 
             string Subject = "Welcome!";
             string Content = "";
-
+            bool FranchiseSchool;
+            string FranchiseID = "";
             try
             {
                 var httpRequest = HttpContext.Current.Request;
@@ -302,10 +305,14 @@ namespace SchoolSystemApi.Controllers
                     throw new Exception("School name required");
                 }
 
+                string SchoolName = httpRequest.Params["SchoolName"];
+
                 if (string.IsNullOrEmpty(httpRequest.Params["Address"]))
                 {
                     throw new Exception("School address required");
                 }
+
+                string Address = httpRequest.Params["Address"];
 
                 if (string.IsNullOrEmpty(httpRequest.Params["SchoolType"]))
                 {
@@ -314,7 +321,6 @@ namespace SchoolSystemApi.Controllers
 
                 string SchoolType = httpRequest.Params["SchoolType"];
 
-                string Address = httpRequest.Params["Address"];
 
                 HttpPostedFile Logo = httpRequest.Files[0];
 
@@ -323,54 +329,34 @@ namespace SchoolSystemApi.Controllers
                     throw new Exception("School logo required");
                 }
 
-                if (string.IsNullOrEmpty(httpRequest.Params["Email"]))
+                if (string.IsNullOrEmpty(httpRequest.Params["CompanyRegistrationNumber"]))
                 {
-                    throw new Exception("Email required");
+                    throw new Exception("Company registration number required");
                 }
 
-                string Email = httpRequest.Params["Email"];
+                string CompanyRegistrationNumber = httpRequest.Params["CompanyRegistrationNumber"];
 
-                if (string.IsNullOrEmpty(httpRequest.Params["Password"]))
+                if (string.IsNullOrEmpty(httpRequest.Params["IsFranchisee"]))
                 {
-                    throw new Exception("Password required");
+                    throw new Exception("Please specify if the school is part of a franchise");
                 }
+                string IsFranchisee = httpRequest.Params["IsFranchisee"];
 
-                string Password = httpRequest.Params["Password"];
-
-                if (string.IsNullOrEmpty(httpRequest.Params["Name"]))
+                if(IsFranchisee == "Yes")
                 {
-                    throw new Exception("Name required");
+                    if (string.IsNullOrEmpty(httpRequest.Params["FranchiseID"]))
+                    {
+                        throw new Exception("Please specify franchise company");
+                    }
+
+                    FranchiseID = httpRequest.Params["FranchiseID"];
+                    FranchiseSchool = true;
                 }
-
-                string Name = httpRequest.Params["Name"];
-
-                if (string.IsNullOrEmpty(httpRequest.Params["Surname"]))
+                else
                 {
-                    throw new Exception("Surname required");
+                     FranchiseSchool = false;
+                   
                 }
-
-                string Surname = httpRequest.Params["Surname"];
-
-                if (string.IsNullOrEmpty(httpRequest.Params["Username"]))
-                {
-                    throw new Exception("Username required");
-                }
-
-                string Username = httpRequest.Params["Username"];
-
-                if (string.IsNullOrEmpty(httpRequest.Params["UserType"]))
-                {
-                    throw new Exception("User type required");
-                }
-
-                string UserType = httpRequest.Params["UserType"];
-
-                if (string.IsNullOrEmpty(httpRequest.Params["IsPrincipal"]))
-                {
-                    throw new Exception("Role required");
-                }
-
-                bool IsPrincipal = Convert.ToBoolean(httpRequest.Params["IsPrincipal"]);
 
                 //create school
                 School sc = new School();
@@ -381,35 +367,15 @@ namespace SchoolSystemApi.Controllers
                 string path = UploadFile(Logo);
 
                 sc.Logo = path;
+                sc.Active = true;
+                sc.CompanyRegistrationNumber = CompanyRegistrationNumber;
+                sc.IsFranchisee = FranchiseSchool;
+                sc.FranchiseID = FranchiseID;
+
                 db.Schools.Add(sc);
                 db.SaveChanges();
 
-                //add SBG(user) to new school
-
-                User u = new User();
-
-                u.UserID = Guid.NewGuid().ToString();
-                u.Email = Email;
-                u.LastLogin = DateTime.Now;
-                u.LastPassword = Password;
-                u.LockedOut = false;
-                u.LoginAttempts = 0;
-                u.Name = Name;
-                u.Password = Password;
-                u.Surname = Surname;
-                u.Username = Username;
-                u.UserType = UserType;
-
-                db.Users.Add(u);
-                db.SaveChanges();
-
-                SGB sgb = new SGB();
-                sgb.School_ID = sc.School_ID;
-                sgb.UserID = u.UserID;
-                sgb.IsPrincipal = IsPrincipal;
-
-                db.SGBs.Add(sgb);
-                db.SaveChanges();
+               
 
                 //Content = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"MailTemplates\ForgotPassword.html");
                 //    Content = Content.Replace("{Name}", User.Name);
@@ -532,7 +498,7 @@ namespace SchoolSystemApi.Controllers
                     db.SaveChanges();
 
                     gm.Status = "Success";
-                    gm.Data = s.Username + " has been deactivated";
+                    gm.Data = "User " + s.Email + " has been deactivated";
                 }
                 else
                 {
@@ -570,7 +536,7 @@ namespace SchoolSystemApi.Controllers
                     db.SaveChanges();
 
                     gm.Status = "Success";
-                    gm.Data = s.Username + " is now active";
+                    gm.Data = "User " + s.Email + " is now active";
                 }
                 else
                 {
@@ -607,7 +573,7 @@ namespace SchoolSystemApi.Controllers
                     db.SaveChanges();
 
                     gm.Status = "Success";
-                    gm.Data = user.Username + " is now unlocked";
+                    gm.Data = "User " + user.Email + " is now unlocked";
 
                 }
                 else
@@ -646,7 +612,7 @@ namespace SchoolSystemApi.Controllers
                     db.SaveChanges();
 
                     gm.Status = "Success";
-                    gm.Data = user.Username + " is now locked";
+                    gm.Data = "User  " + user.Email + " is now locked";
                 }
                 else
                 {
@@ -672,7 +638,7 @@ namespace SchoolSystemApi.Controllers
             try
             {
                 var s = (from a in db.Schools
-                         select new School
+                         select new NewSchool
                          {
                              Status = "Success",
                              School_ID = a.School_ID,
@@ -759,7 +725,7 @@ namespace SchoolSystemApi.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("Portal/Teachers/{School_ID}")]
         public object GetSchoolTeachers(string School_ID)
         {
@@ -768,10 +734,10 @@ namespace SchoolSystemApi.Controllers
             GenericModel gm = new GenericModel();
             try
             {
-                var s = (from b in db.Teachers
+                var s = (from b in dbP.Teachers
                          join c in db.Users on b.UserID equals c.UserID
                          join d in db.Schools on b.School_ID equals d.School_ID
-                         join e in db.Departments on b.Department_ID equals e.ID
+                         join e in dbP.Departments on b.Department_ID equals e.ID
                          where d.School_ID == School_ID
                          select new GetUser
                          {
@@ -781,7 +747,6 @@ namespace SchoolSystemApi.Controllers
                              SchoolName = d.SchoolName,
                              Name = c.Name,
                              Surname = c.Surname,
-                             Username = c.Username,
                              Email = c.Email,
                              UserType = c.UserType,
                              Department_ID = e.ID,
@@ -804,6 +769,8 @@ namespace SchoolSystemApi.Controllers
 
             return gm;
         }
+
+        
         #endregion
 
         #region Methods
@@ -813,10 +780,9 @@ namespace SchoolSystemApi.Controllers
             GetUser gu = new GetUser();
             try
             {
-                var user = (from b in db.Teachers
+                var user = (from b in dbP.Teachers
                             join c in db.Users on b.UserID equals c.UserID
                             join d in db.Schools on b.School_ID equals d.School_ID
-                            join e in db.Departments on b.Department_ID equals e.ID
                             where b.UserID == UserID
                             select new GetUser
                             {
@@ -824,13 +790,11 @@ namespace SchoolSystemApi.Controllers
                                 UserID = b.UserID,
                                 School_ID = b.School_ID,
                                 SchoolName = d.SchoolName,
+                                Logo = d.Logo,
                                 Name = c.Name,
                                 Surname = c.Surname,
-                                Username = c.Username,
                                 Email = c.Email,
                                 UserType = c.UserType,
-                                Department_ID = e.ID,
-                                DepartmentName = e.DepartmentName,
                                 HOD = b.IsHOD
                             }).FirstOrDefault();
 
@@ -840,7 +804,7 @@ namespace SchoolSystemApi.Controllers
                 }
                 else
                 {
-                    throw new Exception("Failed to load teacher's information.");
+                    throw new Exception("Failed to get teacher's information.");
                 }
 
             }
@@ -939,19 +903,7 @@ namespace SchoolSystemApi.Controllers
                         Status = "Available";
                     }
                 }
-
-                if (Type == "Username")
-                {
-                    var username = (from a in db.Users where a.Username == Text select a.Username).FirstOrDefault();
-                    if (username != null)
-                    {
-                        Status = "Duplicate";
-                    }
-                    else
-                    {
-                        Status = "Available";
-                    }
-                }
+                
             }
             catch (Exception ex)
             {

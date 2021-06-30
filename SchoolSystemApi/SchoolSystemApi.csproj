@@ -224,12 +224,36 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Department.cs">
+      <DependentUpon>PreSchools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Franchise.cs">
       <DependentUpon>SchoolSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Management.cs">
+      <DependentUpon>PreSchools.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Models.cs" />
+    <Compile Include="Parent.cs">
+      <DependentUpon>PreSchools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreSchools.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PreSchools.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreSchools.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PreSchools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreSchools.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PreSchools.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="School.cs">
       <DependentUpon>SchoolSystem.tt</DependentUpon>
@@ -249,14 +273,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SchoolSystem.edmx</DependentUpon>
     </Compile>
-    <Compile Include="SGB.cs">
-      <DependentUpon>SchoolSystem.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Subject.cs">
-      <DependentUpon>SchoolSystem.tt</DependentUpon>
-    </Compile>
     <Compile Include="Teacher.cs">
-      <DependentUpon>SchoolSystem.tt</DependentUpon>
+      <DependentUpon>PreSchools.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
       <DependentUpon>SchoolSystem.tt</DependentUpon>
@@ -273,6 +291,16 @@
     <Content Include="Global.asax" />
     <Content Include="MailTemplates\ForgotPassword.html" />
     <Content Include="MailTemplates\PasswordUpdate.html" />
+    <Content Include="PreSchools.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PreSchools.edmx</DependentUpon>
+      <LastGenOutput>PreSchools.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="PreSchools.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PreSchools.edmx</DependentUpon>
+      <LastGenOutput>PreSchools.cs</LastGenOutput>
+    </Content>
     <Content Include="SchoolSystem.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SchoolSystem.Context.cs</LastGenOutput>
@@ -310,6 +338,13 @@
     </EntityDeploy>
     <Content Include="SchoolSystem.edmx.diagram">
       <DependentUpon>SchoolSystem.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="PreSchools.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PreSchools.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="PreSchools.edmx.diagram">
+      <DependentUpon>PreSchools.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
