@@ -22,10 +22,10 @@ namespace SchoolSystemApi.Controllers
         string SMTPUserName = System.Configuration.ConfigurationManager.AppSettings["SMTPUserName"].ToString();
         string SMTPPassword = System.Configuration.ConfigurationManager.AppSettings["SMTPPassword"].ToString();
 
+        string DefaultLogo = System.Configuration.ConfigurationManager.AppSettings["DefaultLogo"].ToString();
 
         SchoolSystemEntities db = new SchoolSystemEntities();
         PreSchoolsEntities dbP = new PreSchoolsEntities();
-
 
 
         static readonly Account account = new Account(
@@ -283,7 +283,8 @@ namespace SchoolSystemApi.Controllers
 
         #endregion
 
-        #region Admin
+
+        #region Portal
 
         [HttpPost]
         [Route("Admin/School/Create")]
@@ -293,13 +294,11 @@ namespace SchoolSystemApi.Controllers
 
             string Subject = "Welcome!";
             string Content = "";
-            bool FranchiseSchool;
-            string FranchiseID = "";
             try
             {
                 var httpRequest = HttpContext.Current.Request;
 
-                //Validate input
+                //school validation
                 if (string.IsNullOrEmpty(httpRequest.Params["SchoolName"]))
                 {
                     throw new Exception("School name required");
@@ -307,20 +306,33 @@ namespace SchoolSystemApi.Controllers
 
                 string SchoolName = httpRequest.Params["SchoolName"];
 
+                if (string.IsNullOrEmpty(httpRequest.Params["SchoolType"]))
+                {
+                    throw new Exception("Education level required");
+                }
+
+                string SchoolType = httpRequest.Params["SchoolType"];
+
+                if (string.IsNullOrEmpty(httpRequest.Params["SchoolEmail"]))
+                {
+                    throw new Exception("School email required");
+                }
+
+                string SchoolEmail = httpRequest.Params["SchoolEmail"];
+
+                if (string.IsNullOrEmpty(httpRequest.Params["SchoolTelephone"]))
+                {
+                    throw new Exception("School telephone required");
+                }
+
+                string SchoolTelephone = httpRequest.Params["SchoolTelephone"];
+
                 if (string.IsNullOrEmpty(httpRequest.Params["Address"]))
                 {
                     throw new Exception("School address required");
                 }
 
                 string Address = httpRequest.Params["Address"];
-
-                if (string.IsNullOrEmpty(httpRequest.Params["SchoolType"]))
-                {
-                    throw new Exception("School type required");
-                }
-
-                string SchoolType = httpRequest.Params["SchoolType"];
-
 
                 HttpPostedFile Logo = httpRequest.Files[0];
 
@@ -336,46 +348,126 @@ namespace SchoolSystemApi.Controllers
 
                 string CompanyRegistrationNumber = httpRequest.Params["CompanyRegistrationNumber"];
 
-                if (string.IsNullOrEmpty(httpRequest.Params["IsFranchisee"]))
-                {
-                    throw new Exception("Please specify if the school is part of a franchise");
-                }
-                string IsFranchisee = httpRequest.Params["IsFranchisee"];
+                //User validation
 
-                if(IsFranchisee == "Yes")
+                if (string.IsNullOrEmpty(httpRequest.Params["UserPassword"]))
                 {
-                    if (string.IsNullOrEmpty(httpRequest.Params["FranchiseID"]))
-                    {
-                        throw new Exception("Please specify franchise company");
-                    }
-
-                    FranchiseID = httpRequest.Params["FranchiseID"];
-                    FranchiseSchool = true;
+                    throw new Exception("User's password required");
                 }
-                else
+
+                string UserPassword = httpRequest.Params["UserPassword"];
+
+                if (string.IsNullOrEmpty(httpRequest.Params["UserEmail"]))
                 {
-                     FranchiseSchool = false;
-                   
+                    throw new Exception("User's email required");
+                }
+
+                string UserEmail = httpRequest.Params["UserEmail"];
+
+                if (string.IsNullOrEmpty(httpRequest.Params["Name"]))
+                {
+                    throw new Exception("User's name required");
+                }
+
+                string Name = httpRequest.Params["Name"];
+
+                if (string.IsNullOrEmpty(httpRequest.Params["Surname"]))
+                {
+                    throw new Exception("User's surname required");
+                }
+
+                string Surname = httpRequest.Params["Surname"];
+
+                if (string.IsNullOrEmpty(httpRequest.Params["UserTelephone"]))
+                {
+                    throw new Exception("User's telephone required");
+                }
+
+                string UserTelephone = httpRequest.Params["UserTelephone"];
+
+                if (string.IsNullOrEmpty(httpRequest.Params["UserType"]))
+                {
+                    throw new Exception("User's role required");
+                }
+
+                string UserType = httpRequest.Params["UserType"];
+
+                //if (string.IsNullOrEmpty(httpRequest.Params["UserPosition"]))
+                //{
+                //    throw new Exception("User's role in the institution required");
+                //}
+
+                //string UserPosition = httpRequest.Params["UserPosition"];
+
+                string check = VerifyDuplicate(SchoolEmail, "Email", "SchoolsTable");
+
+                if(check == "Duplicate")
+                {
+                    throw new Exception("The school email provided is already in use, please try another email.");
+                }
+
+                check = VerifyDuplicate(UserEmail, "Email", "UsersTable");
+
+                if (check == "Duplicate")
+                {
+                    throw new Exception("The user's email provided is already in use, please try another email.");
                 }
 
                 //create school
                 School sc = new School();
 
                 sc.School_ID = Guid.NewGuid().ToString();
-                sc.Address = Address;
+                sc.SchoolName = SchoolName;
                 sc.SchoolType = SchoolType;
+                sc.Email = SchoolEmail;
+                sc.Telephone = SchoolTelephone;
+                sc.Address = Address;
+
                 string path = UploadFile(Logo);
 
                 sc.Logo = path;
                 sc.Active = true;
                 sc.CompanyRegistrationNumber = CompanyRegistrationNumber;
-                sc.IsFranchisee = FranchiseSchool;
-                sc.FranchiseID = FranchiseID;
+                sc.DateCreated = DateTime.Now;
+                sc.DateModified = DateTime.Now;
 
                 db.Schools.Add(sc);
                 db.SaveChanges();
 
+                //Add User to school
                
+                User u = new User();
+
+                u.UserID = Guid.NewGuid().ToString();
+                u.Password = UserPassword;
+                u.LastPassword = UserPassword;
+                u.Email = UserEmail;
+                u.Name = Name;
+                u.Surname = Surname;
+                u.Telephone = UserTelephone;
+                u.UserType = UserType;
+                u.LastLogin = DateTime.Now;
+                u.LoginAttempts = 0;
+                u.LockedOut = false;
+                u.Active = true;
+                u.DateCreated = DateTime.Now;
+                u.DateModified = DateTime.Now;
+
+                db.Users.Add(u);
+                db.SaveChanges();
+
+
+                //Add principal to management
+
+                Management m = new Management();
+                m.School_ID = sc.School_ID;
+                m.UserID = u.UserID;
+                m.Position = "Principal";
+
+                dbP.Managements.Add(m);
+                dbP.SaveChanges();
+
+
 
                 //Content = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"MailTemplates\ForgotPassword.html");
                 //    Content = Content.Replace("{Name}", User.Name);
@@ -665,9 +757,7 @@ namespace SchoolSystemApi.Controllers
 
             return gm;
         }
-        #endregion
-
-        #region Portal
+     
 
         [HttpPost]
         [Route("Portal/User/{UserID}")]
@@ -687,7 +777,12 @@ namespace SchoolSystemApi.Controllers
                 if (UT != null)
                 {
 
-                    if (UT.UserType == "SGB")
+                    if (UT.UserType == "Admin")
+                    {
+                        gu = (GetUser)GetAdmin(UserID);
+                    }
+
+                    if (UT.UserType == "Management")
                     {
 
                     }
@@ -724,6 +819,47 @@ namespace SchoolSystemApi.Controllers
             return gu;
         }
 
+        [HttpPost]
+        [Route("Portal/Dashboard/{UserID}")]
+        public object GetDashboard(string UserID)
+        {
+            GetDashboard gd = new GetDashboard();
+          
+
+            try
+            {
+                if (string.IsNullOrEmpty(UserID))
+                {
+                    throw new Exception("User ID required");
+                }
+                var UT = (from u in db.Users where u.UserID == UserID select u).FirstOrDefault();
+
+                if (UT != null)
+                {
+
+                    if (UT.UserType == "Admin")
+                    {
+                        gd.NumberOfSchools = (from s in db.Schools where s.Active == true select s).Count();
+                        gd.NumberOfUsers = (from u in db.Users where u.Active == true select u).Count();
+                    }
+
+                    gd.Status = "Success";
+                }
+                else
+                {
+                    throw new Exception("Invalid User ID");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                gd.Status = "Failed";
+                gd.Data = ex.Message;
+
+            }
+
+            return gd;
+        }
 
         [HttpPost]
         [Route("Portal/Teachers/{School_ID}")]
@@ -770,7 +906,7 @@ namespace SchoolSystemApi.Controllers
             return gm;
         }
 
-        
+
         #endregion
 
         #region Methods
@@ -805,6 +941,45 @@ namespace SchoolSystemApi.Controllers
                 else
                 {
                     throw new Exception("Failed to get teacher's information.");
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                gu.Status = "Failed";
+                gu.Data = ex.Message;
+                return gu;
+            }
+
+        }
+
+        public object GetAdmin(string UserID)
+        {
+            GetUser gu = new GetUser();
+            try
+            {
+                var user = (from b in db.Users
+                            where b.UserID == UserID
+                            select new GetUser
+                            {
+                                Status = "Success",
+                                UserID = b.UserID,
+                                SchoolName = "School System",
+                                Logo = DefaultLogo,
+                                Name = b.Name,
+                                Surname = b.Surname,
+                                Email = b.Email,
+                                UserType = b.UserType,
+                            }).FirstOrDefault();
+
+                if (user != null)
+                {
+                    return user;
+                }
+                else
+                {
+                    throw new Exception("Failed to get admin's information.");
                 }
 
             }
@@ -879,33 +1054,44 @@ namespace SchoolSystemApi.Controllers
                 Path = Result.SecureUrl.AbsoluteUri;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
+                Path = "Failed";
             }
             return Path;
         }
 
-        public string VerifyDuplicate(string Text, string Type)
+        public string VerifyDuplicate(string Text, string Type, string Where)
         {
             string Status = "";
+            var duplicate = "";
             try
             {
                 if (Type == "Email")
                 {
-                    var email = (from a in db.Users where a.Email == Text select a.Email).FirstOrDefault();
-                    if (email != null)
+                    if(Where == "UsersTable")
                     {
-                        Status = "Duplicate";
+                         duplicate = (from a in db.Users where a.Email == Text select a.Email).FirstOrDefault();
                     }
-                    else
+
+                    if (Where == "SchoolsTable")
                     {
-                        Status = "Available";
+                        duplicate = (from a in db.Schools where a.Email == Text select a.Email).FirstOrDefault();
                     }
+
                 }
-                
+
+                if (duplicate != null)
+                {
+                    Status = "Duplicate";
+                }
+                else
+                {
+                    Status = "Available";
+                }
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Status = "Failed";
             }

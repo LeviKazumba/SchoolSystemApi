@@ -26,5 +26,7 @@ namespace SchoolSystemApi
         public int LoginAttempts { get; set; }
         public bool LockedOut { get; set; }
         public bool Active { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<System.DateTime> DateModified { get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace SchoolSystemApi
     {
         public string UserID { get; set; }
         public string School_ID { get; set; }
+        public string Position { get; set; }
     }
 }

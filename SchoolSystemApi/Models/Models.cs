@@ -105,9 +105,6 @@ namespace SchoolSystemApi.Models
         public string Surname { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Username { get; set; }
-
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Email { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -124,7 +121,22 @@ namespace SchoolSystemApi.Models
     }
 
 
-    public class Teachers
+    public class GetDashboard
+    {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Status { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Data { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public int? NumberOfSchools { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public int? NumberOfUsers { get; set; }
+    }
+
+        public class Teachers
     {
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Status { get; set; }

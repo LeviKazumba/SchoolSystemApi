@@ -19,6 +19,7 @@
           </Key>
           <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="School_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Position" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Parents">
           <Key>
@@ -77,6 +78,7 @@
           </Key>
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="School_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Parent">
           <Key>
@@ -123,6 +125,7 @@
           <EntitySetMapping Name="Managements">
             <EntityTypeMapping TypeName="PreSchools.Management">
               <MappingFragment StoreEntitySet="Management">
+                <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="School_ID" ColumnName="School_ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
