@@ -49,7 +49,7 @@ namespace SchoolSystemApi.Models
 
     #region Admin
 
-    public class NewSchool
+    public class GetSchool
     {
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -74,6 +74,21 @@ namespace SchoolSystemApi.Models
         public string Status { get; set; }
     }
 
+    public class NewSchool
+    {
+        public HttpPostedFile Logo { get; set; }
+        public string SchoolName { get; set; }
+        public string CountryName { get; set; }
+        public string SchoolTelephone { get; set; }
+        public string SchoolEmail { get; set; }
+        public string SchoolType { get; set; }
+        public string CompanyRegistrationNumber { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string UserEmail { get; set; }
+        public string UserTelephone { get; set; }
+        public string Address { get; set; }
+    }
     #endregion
 
     #region Portal

@@ -226,6 +226,9 @@
     <Compile Include="Department.cs">
       <DependentUpon>PreSchools.tt</DependentUpon>
     </Compile>
+    <Compile Include="Franchise.cs">
+      <DependentUpon>SchoolSystem.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

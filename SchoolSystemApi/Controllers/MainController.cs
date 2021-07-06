@@ -348,14 +348,6 @@ namespace SchoolSystemApi.Controllers
 
                 string CompanyRegistrationNumber = httpRequest.Params["CompanyRegistrationNumber"];
 
-                //User validation
-
-                if (string.IsNullOrEmpty(httpRequest.Params["UserPassword"]))
-                {
-                    throw new Exception("User's password required");
-                }
-
-                string UserPassword = httpRequest.Params["UserPassword"];
 
                 if (string.IsNullOrEmpty(httpRequest.Params["UserEmail"]))
                 {
@@ -385,28 +377,14 @@ namespace SchoolSystemApi.Controllers
 
                 string UserTelephone = httpRequest.Params["UserTelephone"];
 
-                if (string.IsNullOrEmpty(httpRequest.Params["UserType"]))
-                {
-                    throw new Exception("User's role required");
-                }
-
-                string UserType = httpRequest.Params["UserType"];
-
-                //if (string.IsNullOrEmpty(httpRequest.Params["UserPosition"]))
-                //{
-                //    throw new Exception("User's role in the institution required");
-                //}
-
-                //string UserPosition = httpRequest.Params["UserPosition"];
-
-                string check = VerifyDuplicate(SchoolEmail, "Email", "SchoolsTable");
+                string check = VerifyDuplicate(SchoolEmail, "Email", "SchoolTable");
 
                 if(check == "Duplicate")
                 {
                     throw new Exception("The school email provided is already in use, please try another email.");
                 }
 
-                check = VerifyDuplicate(UserEmail, "Email", "UsersTable");
+                check = VerifyDuplicate(UserEmail, "Email", "UserTable");
 
                 if (check == "Duplicate")
                 {
@@ -439,13 +417,13 @@ namespace SchoolSystemApi.Controllers
                 User u = new User();
 
                 u.UserID = Guid.NewGuid().ToString();
-                u.Password = UserPassword;
-                u.LastPassword = UserPassword;
+                u.Password = Guid.NewGuid().ToString().Substring(1, 6);
+                u.LastPassword = u.Password;
                 u.Email = UserEmail;
                 u.Name = Name;
                 u.Surname = Surname;
                 u.Telephone = UserTelephone;
-                u.UserType = UserType;
+                u.UserType = "SchoolManagement";
                 u.LastLogin = DateTime.Now;
                 u.LoginAttempts = 0;
                 u.LockedOut = false;
@@ -479,8 +457,8 @@ namespace SchoolSystemApi.Controllers
                 //    SendEmail(User.Email, Content, Subject, CC, "Support");
 
 
-                //    gm.Status = "Success";
-                //    gm.Data = "We have sent your login credentials to this email address: " + User.Email;
+                gm.Status = "Success";
+                gm.Data = SchoolName + " has been added.";
 
             }
             catch (Exception ex)
@@ -730,7 +708,7 @@ namespace SchoolSystemApi.Controllers
             try
             {
                 var s = (from a in db.Schools
-                         select new NewSchool
+                         select new GetSchool
                          {
                              Status = "Success",
                              School_ID = a.School_ID,
@@ -1069,12 +1047,12 @@ namespace SchoolSystemApi.Controllers
             {
                 if (Type == "Email")
                 {
-                    if(Where == "UsersTable")
+                    if(Where == "UserTable")
                     {
                          duplicate = (from a in db.Users where a.Email == Text select a.Email).FirstOrDefault();
                     }
 
-                    if (Where == "SchoolsTable")
+                    if (Where == "SchoolTable")
                     {
                         duplicate = (from a in db.Schools where a.Email == Text select a.Email).FirstOrDefault();
                     }

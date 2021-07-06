@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SchoolSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Franchises">
+          <Key>
+            <PropertyRef Name="FranchiseID" />
+          </Key>
+          <Property Name="FranchiseID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FranchiseName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="NumberOfFranchisee" Type="int" Nullable="false" />
+          <Property Name="CompnayRegistrationNumber" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
         <EntityType Name="Schools">
           <Key>
             <PropertyRef Name="School_ID" />
@@ -41,6 +53,7 @@
           <Property Name="DateModified" Type="datetime" />
         </EntityType>
         <EntityContainer Name="SchoolSystemModelStoreContainer">
+          <EntitySet Name="Franchises" EntityType="Self.Franchises" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -50,6 +63,7 @@
       <Schema Namespace="SchoolSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SchoolSystemEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="SchoolSystemModel.User" />
+          <EntitySet Name="Franchises" EntityType="SchoolSystemModel.Franchise" />
           <EntitySet Name="Schools" EntityType="SchoolSystemModel.School" />
         </EntityContainer>
         <EntityType Name="User">
@@ -70,6 +84,18 @@
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Franchise">
+          <Key>
+            <PropertyRef Name="FranchiseID" />
+          </Key>
+          <Property Name="FranchiseID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FranchiseName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfFranchisee" Type="Int32" Nullable="false" />
+          <Property Name="CompnayRegistrationNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Logo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="School">
           <Key>
@@ -110,6 +136,19 @@
                 <ScalarProperty Name="LastPassword" ColumnName="LastPassword" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Franchises">
+            <EntityTypeMapping TypeName="SchoolSystemModel.Franchise">
+              <MappingFragment StoreEntitySet="Franchises">
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CompnayRegistrationNumber" ColumnName="CompnayRegistrationNumber" />
+                <ScalarProperty Name="NumberOfFranchisee" ColumnName="NumberOfFranchisee" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="FranchiseName" ColumnName="FranchiseName" />
+                <ScalarProperty Name="FranchiseID" ColumnName="FranchiseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

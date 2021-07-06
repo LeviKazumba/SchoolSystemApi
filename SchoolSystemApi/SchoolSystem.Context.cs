@@ -26,6 +26,7 @@ namespace SchoolSystemApi
         }
     
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Franchise> Franchises { get; set; }
         public virtual DbSet<School> Schools { get; set; }
     }
 }
