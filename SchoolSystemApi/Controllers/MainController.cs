@@ -1,5 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Newtonsoft.Json;
 using SchoolSystemApi.Models;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,8 @@ namespace SchoolSystemApi.Controllers
 
                 var User = (from a in db.Users where a.Email == l.Email select a).FirstOrDefault();
 
+                string school_ID = "";
+
                 if (User != null)
                 {
 
@@ -72,6 +75,13 @@ namespace SchoolSystemApi.Controllers
                         r.Status = "Success";
                         r.UserID = User.UserID;
                         r.Email = User.Email;
+
+                        if ((User.UserType == "SchoolManagement") || (User.UserType == "SchoolTeachers") || (User.UserType == "SchoolStudents"))
+                        {
+                            school_ID = (from s in db.UsersAndSchools where User.UserID == s.UserID select s.School_ID).FirstOrDefault();
+                        }
+
+                        r.School_ID = school_ID;
 
                         User.LastLogin = DateTime.Now;
                         User.LoginAttempts = 0;
@@ -284,7 +294,7 @@ namespace SchoolSystemApi.Controllers
         #endregion
 
 
-        #region Portal
+        #region Admin
 
         [HttpPost]
         [Route("Admin/School/Create")]
@@ -296,7 +306,24 @@ namespace SchoolSystemApi.Controllers
             string Content = "";
             try
             {
+
+
                 var httpRequest = HttpContext.Current.Request;
+
+                if (string.IsNullOrEmpty(httpRequest.Params["UserID"]))
+                {
+                    throw new Exception("Access denied, authorized");
+                }
+
+                string UserID = httpRequest.Params["UserID"];
+
+                //Validate Admin User
+                string Verified = VerifyAdminUser(UserID);
+
+                if (Verified == "Unauthorized")
+                {
+                    throw new Exception("Access denied, authorized");
+                }
 
                 //school validation
                 if (string.IsNullOrEmpty(httpRequest.Params["SchoolName"]))
@@ -379,7 +406,7 @@ namespace SchoolSystemApi.Controllers
 
                 string check = VerifyDuplicate(SchoolEmail, "Email", "SchoolTable");
 
-                if(check == "Duplicate")
+                if (check == "Duplicate")
                 {
                     throw new Exception("The school email provided is already in use, please try another email.");
                 }
@@ -413,7 +440,7 @@ namespace SchoolSystemApi.Controllers
                 db.SaveChanges();
 
                 //Add User to school
-               
+
                 User u = new User();
 
                 u.UserID = Guid.NewGuid().ToString();
@@ -435,15 +462,14 @@ namespace SchoolSystemApi.Controllers
                 db.SaveChanges();
 
 
-                //Add principal to management
+                //Add User to School relationship
 
-                Management m = new Management();
+                UsersAndSchool m = new UsersAndSchool();
                 m.School_ID = sc.School_ID;
                 m.UserID = u.UserID;
-                m.Position = "Principal";
 
-                dbP.Managements.Add(m);
-                dbP.SaveChanges();
+                db.UsersAndSchools.Add(m);
+                db.SaveChanges();
 
 
 
@@ -471,13 +497,25 @@ namespace SchoolSystemApi.Controllers
         }
 
         [HttpPost]
-        [Route("Admin/School/Deactivate/{School_ID}")]
-        public object DeactivateSchool(string School_ID)
+        [Route("Admin/School/Deactivate/{UserID}/{School_ID}")]
+        public object DeactivateSchool(string UserID, string School_ID)
         {
             GenericModel gm = new GenericModel();
 
             try
             {
+                //Validate Admin User
+                if (string.IsNullOrEmpty(UserID))
+                {
+                    throw new Exception("Access denied, authorized");
+                }
+
+                string Verified = VerifyAdminUser(UserID);
+
+                if (Verified == "Unauthorized")
+                {
+                    throw new Exception("Access denied, authorized");
+                }
 
                 if (string.IsNullOrEmpty(School_ID))
                 {
@@ -488,7 +526,9 @@ namespace SchoolSystemApi.Controllers
 
                 if (s != null)
                 {
+                    s.Email = "D-" + s.Email;
                     s.Active = false;
+                    s.DateCreated = DateTime.Now;
                     db.SaveChanges();
 
                     gm.Status = "Success";
@@ -509,13 +549,32 @@ namespace SchoolSystemApi.Controllers
         }
 
         [HttpPost]
-        [Route("Admin/School/Activate/{School_ID}")]
-        public object ActivateSchool(string School_ID)
+        [Route("Admin/School/Activate/{UserID}/{School_ID}")]
+        public object ActivateSchool(string UserID, string School_ID)
         {
             GenericModel gm = new GenericModel();
 
             try
             {
+
+                //Validate Admin User
+                if (string.IsNullOrEmpty(UserID))
+                {
+                    throw new Exception("Access denied, authorized");
+                }
+
+                string Verified = VerifyAdminUser(UserID);
+
+                if (Verified == "Unauthorized")
+                {
+                    throw new Exception("Access denied, authorized");
+                }
+
+                if (string.IsNullOrEmpty(School_ID))
+                {
+                    throw new Exception("School ID required");
+                }
+
 
                 if (string.IsNullOrEmpty(School_ID))
                 {
@@ -526,7 +585,9 @@ namespace SchoolSystemApi.Controllers
 
                 if (s != null)
                 {
+                    s.Email = s.Email.Replace("D-", "");
                     s.Active = true;
+                    s.DateModified = DateTime.Now;
                     db.SaveChanges();
 
                     gm.Status = "Success";
@@ -700,31 +761,44 @@ namespace SchoolSystemApi.Controllers
         }
 
 
-        [HttpGet]
-        [Route("Admin/Schools")]
-        public object Getchools()
+        [HttpPost]
+        [Route("Admin/Schools/{UserID}")]
+        public object GetAllSchools(string UserID)
         {
             GenericModel gm = new GenericModel();
+
+
             try
             {
+                //Validate Admin User
+                string Verified = VerifyAdminUser(UserID);
+
+                if (Verified == "Unauthorized")
+                {
+                    throw new Exception("Access denied, authorized");
+                }
+
                 var s = (from a in db.Schools
                          select new GetSchool
                          {
-                             Status = "Success",
                              School_ID = a.School_ID,
                              SchoolName = a.SchoolName,
                              SchoolType = a.SchoolType,
-                             Logo = a.Logo,
+                             Email = a.Email,
+                             Telephone = a.Telephone,
                              Address = a.Address,
                              Active = a.Active,
+                             CompanyRegistrationNumber = a.CompanyRegistrationNumber,
+                             DateCreated = (DateTime)a.DateCreated,
+                             DateModified = (DateTime)a.DateModified
 
                          }).ToList();
 
                 if (s != null)
                 {
-                    return s;
+                    gm.Status = "Success";
+                    gm.Data = JsonConvert.SerializeObject(s);
                 }
-
 
             }
             catch (Exception ex)
@@ -735,8 +809,10 @@ namespace SchoolSystemApi.Controllers
 
             return gm;
         }
-     
 
+        #endregion
+
+        #region Portal
         [HttpPost]
         [Route("Portal/User/{UserID}")]
         public object GetUser(string UserID)
@@ -755,7 +831,7 @@ namespace SchoolSystemApi.Controllers
                 if (UT != null)
                 {
 
-                    if (UT.UserType == "Admin")
+                    if (UT.UserType == "SystemAdmin")
                     {
                         gu = (GetUser)GetAdmin(UserID);
                     }
@@ -802,7 +878,7 @@ namespace SchoolSystemApi.Controllers
         public object GetDashboard(string UserID)
         {
             GetDashboard gd = new GetDashboard();
-          
+
 
             try
             {
@@ -815,7 +891,7 @@ namespace SchoolSystemApi.Controllers
                 if (UT != null)
                 {
 
-                    if (UT.UserType == "Admin")
+                    if (UT.UserType == "SystemAdmin")
                     {
                         gd.NumberOfSchools = (from s in db.Schools where s.Active == true select s).Count();
                         gd.NumberOfUsers = (from u in db.Users where u.Active == true select u).Count();
@@ -1019,15 +1095,15 @@ namespace SchoolSystemApi.Controllers
                     Byte = theReader.ReadBytes(Logo.ContentLength);
                 }
 
-                Stream selfieStream = new MemoryStream(Byte);
-                selfieStream.Position = 0;
+                Stream Stream = new MemoryStream(Byte);
+                Stream.Position = 0;
 
-                var uploadselfie = new ImageUploadParams()
+                var uploadParams = new ImageUploadParams()
                 {
-                    File = new FileDescription(Logo.FileName, selfieStream),
-                    PublicId = Logo.FileName,
+                    File = new FileDescription("",Stream),
                 };
-                var Result = cloudinary.Upload(uploadselfie);
+
+                var Result = cloudinary.Upload(uploadParams);
 
                 Path = Result.SecureUrl.AbsoluteUri;
 
@@ -1047,9 +1123,9 @@ namespace SchoolSystemApi.Controllers
             {
                 if (Type == "Email")
                 {
-                    if(Where == "UserTable")
+                    if (Where == "UserTable")
                     {
-                         duplicate = (from a in db.Users where a.Email == Text select a.Email).FirstOrDefault();
+                        duplicate = (from a in db.Users where a.Email == Text select a.Email).FirstOrDefault();
                     }
 
                     if (Where == "SchoolTable")
@@ -1068,6 +1144,30 @@ namespace SchoolSystemApi.Controllers
                     Status = "Available";
                 }
 
+            }
+            catch (Exception)
+            {
+                Status = "Failed";
+            }
+            return Status;
+        }
+
+
+        public string VerifyAdminUser(string UserID)
+        {
+            string Status = "";
+            try
+            {
+                var user = (from u in db.Users where UserID == u.UserID select u).FirstOrDefault();
+
+                if (user.UserType == "SystemAdmin")
+                {
+                    Status = "Authorized";
+                }
+                else
+                {
+                    Status = "Unauthorized";
+                }
             }
             catch (Exception)
             {

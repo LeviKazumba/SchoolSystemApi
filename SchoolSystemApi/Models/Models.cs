@@ -21,6 +21,8 @@ namespace SchoolSystemApi.Models
 
         public string Email { get; set; }
         public string UserID { get; set; }
+        public string School_ID { get; set; }
+
 
     }
 
@@ -62,16 +64,29 @@ namespace SchoolSystemApi.Models
         public string SchoolType { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Address { get; set; }
+        public string Email { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Logo { get; set; }
+        public string Telephone { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Address { get; set; }
+
+        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        //public string Logo { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool Active { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Status { get; set; }
+        public string CompanyRegistrationNumber { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime DateCreated { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime DateModified { get; set; }
+
     }
 
     public class NewSchool
@@ -151,11 +166,12 @@ namespace SchoolSystemApi.Models
         public int? NumberOfUsers { get; set; }
     }
 
-        public class Teachers
+    public class Teachers
     {
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Status { get; set; }
 
     }
+    #endregion
 }
-        #endregion
+

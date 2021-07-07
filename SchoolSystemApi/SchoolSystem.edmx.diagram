@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="b449e2d598654f9a964b0da5f80dfabe" Name="Diagram1">
         <EntityTypeShape EntityType="SchoolSystemModel.User" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SchoolSystemModel.Franchise" Width="1.5" PointX="6" PointY="0.5" />
         <EntityTypeShape EntityType="SchoolSystemModel.School" Width="1.5" PointX="0.625" PointY="0.625" />
+        <EntityTypeShape EntityType="SchoolSystemModel.UsersAndSchool" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
