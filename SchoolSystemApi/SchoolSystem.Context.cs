@@ -25,8 +25,10 @@ namespace SchoolSystemApi
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<School> Schools { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UsersAndSchool> UsersAndSchools { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserFunction> UserFunctions { get; set; }
     }
 }

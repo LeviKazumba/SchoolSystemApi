@@ -12,11 +12,10 @@ namespace SchoolSystemApi
     using System;
     using System.Collections.Generic;
     
-    public partial class Teacher
+    public partial class UserFunction
     {
         public string UserID { get; set; }
-        public string School_ID { get; set; }
-        public bool IsHOD { get; set; }
-        public Nullable<int> Department_ID { get; set; }
+        public string UserRole { get; set; }
+        public bool CreateSchool { get; set; }
     }
 }

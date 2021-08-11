@@ -15,12 +15,12 @@ namespace SchoolSystemApi
     public partial class User
     {
         public string UserID { get; set; }
-        public string Password { get; set; }
-        public string LastPassword { get; set; }
-        public string Email { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Email { get; set; }
         public string Telephone { get; set; }
+        public string Password { get; set; }
+        public string LastPassword { get; set; }
         public string UserType { get; set; }
         public Nullable<System.DateTime> LastLogin { get; set; }
         public int LoginAttempts { get; set; }
@@ -28,5 +28,7 @@ namespace SchoolSystemApi
         public bool Active { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
+        public string Country { get; set; }
+        public string CountryCode { get; set; }
     }
 }

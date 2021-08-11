@@ -70,22 +70,34 @@ namespace SchoolSystemApi.Models
         public string Telephone { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string Address { get; set; }
-
-        //[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        //public string Logo { get; set; }
+        public string Country { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public bool Active { get; set; }
+        public string CountryCode { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Address { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Logo { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Active { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string CompanyRegistrationNumber { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime DateModified { get; set; }
+        public DateTime? DateModified { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Status { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Data { get; set; }
 
     }
 
@@ -104,6 +116,56 @@ namespace SchoolSystemApi.Models
         public string UserTelephone { get; set; }
         public string Address { get; set; }
     }
+
+
+    public class NewUser
+    {
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Status { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Data { get; set; }
+
+        //Admin User ID
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string UserID { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string CreatedBy { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Surname { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Email { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Telephone { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Password { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string UserType { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string UserRole { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string School_ID { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Country { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string CountryCode { get; set; }
+
+    }
+
     #endregion
 
     #region Portal
@@ -141,13 +203,8 @@ namespace SchoolSystemApi.Models
         public string UserType { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int? Department_ID { get; set; }
+        public string UserRole { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string DepartmentName { get; set; }
-
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public bool? HOD { get; set; }
     }
 
 

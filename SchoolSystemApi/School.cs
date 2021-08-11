@@ -19,6 +19,8 @@ namespace SchoolSystemApi
         public string SchoolType { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }
+        public string Country { get; set; }
+        public string CountryCode { get; set; }
         public string Address { get; set; }
         public string Logo { get; set; }
         public bool Active { get; set; }
