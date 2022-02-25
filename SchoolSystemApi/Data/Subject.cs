@@ -7,17 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SchoolSystemApi
+namespace SchoolSystemApi.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class Subject
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ID { get; set; }
+        public string School { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool Active { get; set; }
+        public string CreatedBy { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<System.DateTime> DateModified { get; set; }
     }
 }

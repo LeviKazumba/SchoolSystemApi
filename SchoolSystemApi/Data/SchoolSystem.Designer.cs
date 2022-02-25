@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\levik\OneDrive\Desktop\Kazumba\Projects\School System\SchoolSystemApi\SchoolSystemApi\SchoolSystem.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Levi Kazumba\OneDrive\Desktop\Kazumba\School System\SchoolSystemApi\SchoolSystemApi\Data\SchoolSystem.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

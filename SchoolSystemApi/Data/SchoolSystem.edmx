@@ -1,0 +1,1146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SchoolSystem.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SchoolSystem.dbo.Assessments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Assessments">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="AssessmentType" />
+            <PropertyRef Name="DateCreated" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="AssessmentType" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AssessmentTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AttendanceRegister">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Class" Type="varchar" MaxLength="50" />
+          <Property Name="Subject" Type="varchar" MaxLength="50" />
+          <Property Name="SchoolStaff" Type="varchar" MaxLength="50" />
+          <Property Name="Student" Type="varchar" MaxLength="50" />
+          <Property Name="ClockIn" Type="datetime" />
+          <Property Name="ClockOut" Type="datetime" />
+          <Property Name="LunchStart" Type="datetime" />
+          <Property Name="LunchEnd" Type="datetime" />
+          <Property Name="Present" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ClassesAndGrades">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="Grade" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ClassesAndSubjects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Iso2" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Iso3" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UNCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Features">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Functions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Grades">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ApiKey" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Method" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RequestData" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ErrorData" Type="nvarchar(max)" />
+          <Property Name="Activity" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SchoolFeaturesAndFunctions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FeatureID" Type="int" />
+          <Property Name="FunctionID" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Schools">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchoolID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SchoolName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SchoolType" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Telephone" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CompanyRegistrationNumber" Type="varchar" MaxLength="100" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SchoolTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TeachersAndClasses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="Teacher" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubTeacher" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TeachersAndSubjects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="int" Nullable="false" />
+          <Property Name="Teacher" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubTeacher" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Timetables">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Subject" Type="int" Nullable="false" />
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="Teacher" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Day" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserFeaturesAndFunctions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FeatureID" Type="int" />
+          <Property Name="FunctionID" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telephone" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Age" Type="date" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastPassword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="UserType" Type="int" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+          <Property Name="LastLogin" Type="datetime" Nullable="false" />
+          <Property Name="LoginAttempts" Type="int" Nullable="false" />
+          <Property Name="LockedOut" Type="bit" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UsersInSchools">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="SchoolSystemStoreContainer">
+          <EntitySet Name="AssessmentTypes" EntityType="Self.AssessmentTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendanceRegister" EntityType="Self.AttendanceRegister" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassesAndGrades" EntityType="Self.ClassesAndGrades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassesAndSubjects" EntityType="Self.ClassesAndSubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Functions" EntityType="Self.Functions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolFeaturesAndFunctions" EntityType="Self.SchoolFeaturesAndFunctions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolTypes" EntityType="Self.SchoolTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeachersAndClasses" EntityType="Self.TeachersAndClasses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeachersAndSubjects" EntityType="Self.TeachersAndSubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timetables" EntityType="Self.Timetables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFeaturesAndFunctions" EntityType="Self.UserFeaturesAndFunctions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersInSchools" EntityType="Self.UsersInSchools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Assessments" EntityType="Self.Assessments" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Assessments].[ID] AS [ID], 
+    [Assessments].[Name] AS [Name], 
+    [Assessments].[AssessmentType] AS [AssessmentType], 
+    [Assessments].[CreatedBy] AS [CreatedBy], 
+    [Assessments].[ModifiedBy] AS [ModifiedBy], 
+    [Assessments].[DateCreated] AS [DateCreated], 
+    [Assessments].[DateModified] AS [DateModified]
+    FROM [dbo].[Assessments] AS [Assessments]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolSystem" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SchoolSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AssessmentTypes" EntityType="SchoolSystem.AssessmentType" />
+          <EntitySet Name="AttendanceRegisters" EntityType="SchoolSystem.AttendanceRegister" />
+          <EntitySet Name="Classes" EntityType="SchoolSystem.Class" />
+          <EntitySet Name="ClassesAndGrades" EntityType="SchoolSystem.ClassesAndGrade" />
+          <EntitySet Name="ClassesAndSubjects" EntityType="SchoolSystem.ClassesAndSubject" />
+          <EntitySet Name="Countries" EntityType="SchoolSystem.Country" />
+          <EntitySet Name="Features" EntityType="SchoolSystem.Feature" />
+          <EntitySet Name="Functions" EntityType="SchoolSystem.Function" />
+          <EntitySet Name="Grades" EntityType="SchoolSystem.Grade" />
+          <EntitySet Name="Logs" EntityType="SchoolSystem.Log" />
+          <EntitySet Name="SchoolFeaturesAndFunctions" EntityType="SchoolSystem.SchoolFeaturesAndFunction" />
+          <EntitySet Name="Schools" EntityType="SchoolSystem.School" />
+          <EntitySet Name="SchoolTypes" EntityType="SchoolSystem.SchoolType" />
+          <EntitySet Name="Subjects" EntityType="SchoolSystem.Subject" />
+          <EntitySet Name="TeachersAndClasses" EntityType="SchoolSystem.TeachersAndClass" />
+          <EntitySet Name="TeachersAndSubjects" EntityType="SchoolSystem.TeachersAndSubject" />
+          <EntitySet Name="Timetables" EntityType="SchoolSystem.Timetable" />
+          <EntitySet Name="UserFeaturesAndFunctions" EntityType="SchoolSystem.UserFeaturesAndFunction" />
+          <EntitySet Name="UserRoles" EntityType="SchoolSystem.UserRole" />
+          <EntitySet Name="Users" EntityType="SchoolSystem.User" />
+          <EntitySet Name="UsersInSchools" EntityType="SchoolSystem.UsersInSchool" />
+          <EntitySet Name="UserTypes" EntityType="SchoolSystem.UserType" />
+          <EntitySet Name="Assessments" EntityType="SchoolSystem.Assessment" />
+        </EntityContainer>
+        <EntityType Name="AssessmentType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="AttendanceRegister">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Student" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClockIn" Type="DateTime" Precision="3" />
+          <Property Name="ClockOut" Type="DateTime" Precision="3" />
+          <Property Name="LunchStart" Type="DateTime" Precision="3" />
+          <Property Name="LunchEnd" Type="DateTime" Precision="3" />
+          <Property Name="Present" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ClassesAndGrade">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="Grade" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ClassesAndSubject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Iso2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Iso3" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UNCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Feature">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Function">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApiKey" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Method" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RequestData" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ErrorData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Activity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SchoolFeaturesAndFunction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeatureID" Type="Int32" />
+          <Property Name="FunctionID" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SchoolID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolType" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyRegistrationNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SchoolType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TeachersAndClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="Teacher" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubTeacher" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TeachersAndSubject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="Int32" Nullable="false" />
+          <Property Name="Teacher" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubTeacher" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Timetable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="Int32" Nullable="false" />
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="Teacher" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Day" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserFeaturesAndFunction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeatureID" Type="Int32" />
+          <Property Name="FunctionID" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="Int32" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <Property Name="LastLogin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LoginAttempts" Type="Int32" Nullable="false" />
+          <Property Name="LockedOut" Type="Boolean" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UsersInSchool">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="School" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Assessment">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="AssessmentType" />
+            <PropertyRef Name="DateCreated" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="AssessmentType" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchoolSystemStoreContainer" CdmEntityContainer="SchoolSystemEntities">
+          <EntitySetMapping Name="AssessmentTypes">
+            <EntityTypeMapping TypeName="SchoolSystem.AssessmentType">
+              <MappingFragment StoreEntitySet="AssessmentTypes">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendanceRegisters">
+            <EntityTypeMapping TypeName="SchoolSystem.AttendanceRegister">
+              <MappingFragment StoreEntitySet="AttendanceRegister">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Present" ColumnName="Present" />
+                <ScalarProperty Name="LunchEnd" ColumnName="LunchEnd" />
+                <ScalarProperty Name="LunchStart" ColumnName="LunchStart" />
+                <ScalarProperty Name="ClockOut" ColumnName="ClockOut" />
+                <ScalarProperty Name="ClockIn" ColumnName="ClockIn" />
+                <ScalarProperty Name="Student" ColumnName="Student" />
+                <ScalarProperty Name="SchoolStaff" ColumnName="SchoolStaff" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="SchoolSystem.Class">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassesAndGrades">
+            <EntityTypeMapping TypeName="SchoolSystem.ClassesAndGrade">
+              <MappingFragment StoreEntitySet="ClassesAndGrades">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassesAndSubjects">
+            <EntityTypeMapping TypeName="SchoolSystem.ClassesAndSubject">
+              <MappingFragment StoreEntitySet="ClassesAndSubjects">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="SchoolSystem.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UNCode" ColumnName="UNCode" />
+                <ScalarProperty Name="PhoneCode" ColumnName="PhoneCode" />
+                <ScalarProperty Name="Iso3" ColumnName="Iso3" />
+                <ScalarProperty Name="Iso2" ColumnName="Iso2" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Features">
+            <EntityTypeMapping TypeName="SchoolSystem.Feature">
+              <MappingFragment StoreEntitySet="Features">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Functions">
+            <EntityTypeMapping TypeName="SchoolSystem.Function">
+              <MappingFragment StoreEntitySet="Functions">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="SchoolSystem.Grade">
+              <MappingFragment StoreEntitySet="Grades">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="SchoolSystem.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Activity" ColumnName="Activity" />
+                <ScalarProperty Name="ErrorData" ColumnName="ErrorData" />
+                <ScalarProperty Name="RequestData" ColumnName="RequestData" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolFeaturesAndFunctions">
+            <EntityTypeMapping TypeName="SchoolSystem.SchoolFeaturesAndFunction">
+              <MappingFragment StoreEntitySet="SchoolFeaturesAndFunctions">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+                <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schools">
+            <EntityTypeMapping TypeName="SchoolSystem.School">
+              <MappingFragment StoreEntitySet="Schools">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CompanyRegistrationNumber" ColumnName="CompanyRegistrationNumber" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SchoolType" ColumnName="SchoolType" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolTypes">
+            <EntityTypeMapping TypeName="SchoolSystem.SchoolType">
+              <MappingFragment StoreEntitySet="SchoolTypes">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="SchoolSystem.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeachersAndClasses">
+            <EntityTypeMapping TypeName="SchoolSystem.TeachersAndClass">
+              <MappingFragment StoreEntitySet="TeachersAndClasses">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SubTeacher" ColumnName="SubTeacher" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeachersAndSubjects">
+            <EntityTypeMapping TypeName="SchoolSystem.TeachersAndSubject">
+              <MappingFragment StoreEntitySet="TeachersAndSubjects">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SubTeacher" ColumnName="SubTeacher" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timetables">
+            <EntityTypeMapping TypeName="SchoolSystem.Timetable">
+              <MappingFragment StoreEntitySet="Timetables">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFeaturesAndFunctions">
+            <EntityTypeMapping TypeName="SchoolSystem.UserFeaturesAndFunction">
+              <MappingFragment StoreEntitySet="UserFeaturesAndFunctions">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="FunctionID" ColumnName="FunctionID" />
+                <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="SchoolSystem.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SchoolSystem.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="LockedOut" ColumnName="LockedOut" />
+                <ScalarProperty Name="LoginAttempts" ColumnName="LoginAttempts" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="LastPassword" ColumnName="LastPassword" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersInSchools">
+            <EntityTypeMapping TypeName="SchoolSystem.UsersInSchool">
+              <MappingFragment StoreEntitySet="UsersInSchools">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="SchoolSystem.UserType">
+              <MappingFragment StoreEntitySet="UserTypes">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Assessments">
+            <EntityTypeMapping TypeName="SchoolSystem.Assessment">
+              <MappingFragment StoreEntitySet="Assessments">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="AssessmentType" ColumnName="AssessmentType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

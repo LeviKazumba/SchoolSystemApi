@@ -7,24 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SchoolSystemApi
+namespace SchoolSystemApi.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class School
+    public partial class Timetable
     {
-        public string School_ID { get; set; }
-        public string SchoolName { get; set; }
-        public string SchoolType { get; set; }
-        public string Email { get; set; }
-        public string Telephone { get; set; }
-        public string Country { get; set; }
-        public string CountryCode { get; set; }
-        public string Address { get; set; }
-        public string Logo { get; set; }
+        public int ID { get; set; }
+        public string School { get; set; }
+        public int Subject { get; set; }
+        public int Class { get; set; }
+        public string Teacher { get; set; }
+        public string Name { get; set; }
+        public string Day { get; set; }
+        public System.TimeSpan StartTime { get; set; }
+        public System.TimeSpan EndTime { get; set; }
+        public string Description { get; set; }
         public bool Active { get; set; }
-        public string CompanyRegistrationNumber { get; set; }
+        public string CreatedBy { get; set; }
+        public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
     }

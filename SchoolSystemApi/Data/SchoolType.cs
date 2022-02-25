@@ -7,15 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SchoolSystemApi
+namespace SchoolSystemApi.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class UsersAndSchool
+    public partial class SchoolType
     {
         public int ID { get; set; }
-        public string UserID { get; set; }
-        public string School_ID { get; set; }
+        public string Name { get; set; }
+        public bool Active { get; set; }
+        public string CreatedBy { get; set; }
+        public string ModifiedBy { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public Nullable<System.DateTime> DateModified { get; set; }
     }
 }

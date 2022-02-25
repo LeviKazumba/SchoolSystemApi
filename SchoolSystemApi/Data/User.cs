@@ -7,28 +7,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SchoolSystemApi
+namespace SchoolSystemApi.Data
 {
     using System;
     using System.Collections.Generic;
     
     public partial class User
     {
+        public int ID { get; set; }
         public string UserID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }
+        public System.DateTime Age { get; set; }
+        public string Gender { get; set; }
         public string Password { get; set; }
         public string LastPassword { get; set; }
-        public string UserType { get; set; }
-        public Nullable<System.DateTime> LastLogin { get; set; }
+        public string Country { get; set; }
+        public int UserType { get; set; }
+        public int UserRole { get; set; }
+        public System.DateTime LastLogin { get; set; }
         public int LoginAttempts { get; set; }
         public bool LockedOut { get; set; }
         public bool Active { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public string CreatedBy { get; set; }
+        public string ModifiedBy { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
-        public string Country { get; set; }
-        public string CountryCode { get; set; }
     }
 }
